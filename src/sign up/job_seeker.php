@@ -19,7 +19,7 @@
 		</div>
 		<div class="left">
 			<div class="login">
-				<div class="login-button">Login</div>
+				<div class="login-button"><a href="../login/job_seeker.php">Login</a></div>
 			</div>
 			<div class="sign-up-form">
 				<div class="sign-up-title">
