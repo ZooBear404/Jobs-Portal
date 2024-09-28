@@ -3,4 +3,4 @@ node_modules/
 .git/
 
 # ignore passwords
-src/pages/passwords.php
+src/passwords.php
