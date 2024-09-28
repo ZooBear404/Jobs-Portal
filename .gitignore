@@ -1,0 +1,6 @@
+node_modules/
+.vscode/
+.git/
+
+# ignore passwords
+src/pages/scripts/passwords.php
