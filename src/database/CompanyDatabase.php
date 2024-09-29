@@ -140,3 +140,35 @@ function getCompanyLogoFromId(int $id) {
 		return "default_profile_image.png";
 	}
 }
+
+function getCompanyNameFromId(int $id) {
+	require("db_config.php");
+	$sql = "SELECT name FROM company WHERE id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_row()[0];
+}
+
+function getListOfJobsPostedByCompanyId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT job_id, name, job_summary, close_date FROM job WHERE company_id = ? AND close_date < CURDATE();";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_assoc();
+}
+
+function getJobApplicationsForJobId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT COUNT(*) AS total_rows FROM job_application WHERE job_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result;
+}
