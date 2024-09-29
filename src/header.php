@@ -14,8 +14,8 @@
 				session_start();
 				if (!isset($_SESSION['session_token'])) {
 			?>
-				<div class="sign-up">Sign Up</div>
-				<div class="login">Login</div>
+				<a href="sign up/job_seeker.php"><div class="sign-up">Sign Up</div></a>
+				<a href="login/job_seeker.php"><div class="login">Login</div></a>
 			<?php } else {
 					require("db_config.php");
 					$session_token = $_SESSION["session_token"];
