@@ -76,7 +76,7 @@ function loginCompany($name, $password) {
 	$_SESSION['session_token'] = $session_token;
 	$_SESSION['type'] = 'company';
 
-	header("location: ../company_index.php");
+	header("location: ../index.php");
 
 
 	return "Successfully created session";

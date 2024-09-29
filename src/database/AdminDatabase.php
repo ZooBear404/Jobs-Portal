@@ -32,7 +32,7 @@ function loginAdmin($email, $password) {
 	session_start();
 	$_SESSION['session_token'] = $session_token;
 	$_SESSION['type'] = 'admin';
-	header("location: ../admin_index.php");
+	header("location: ../index.php");
 
 	return "Successfully logged in";
 }
