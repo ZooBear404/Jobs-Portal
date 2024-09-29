@@ -94,3 +94,37 @@ function getUserImageUrlFromId(int $id) {
 	}
 
 }
+
+function getJobSeekerNameById(int $id) {
+	$sql = "SELECT name FROM job_seeker WHERE job_seeker_id = ?";
+	require("db_config.php");
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows > 0) {
+		return 0;
+	}
+
+	return $result->fetch_row()[0];
+}
+
+function getJobCvPathFromId(int $id) {
+	$sql = "SELECT cv_path FROM job_seeker_cv WHERE job_seeker_cv_id = ?";
+	require("db_config.php");
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_row()[0];
+}
+
+function getJobApplicationListByJobSeekerId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT job_application_id, job_id, job_seeker_cv_id, is_reviewed, is_accepted FROM job_application WHERE job_seeker_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
