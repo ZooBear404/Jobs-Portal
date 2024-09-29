@@ -47,7 +47,7 @@
 								$email = $_POST['email'];
 								$password = $_POST['password'];
 
-								require("../JobSeekerDatabase.php");
+								require("../database/JobSeekerDatabase.php");
 								$result = loginJobSeeker($email, $password);
 								if ($result[0] == 1) {
 									echo "<p class='failure'>Email not found!!!</p>";

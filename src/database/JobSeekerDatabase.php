@@ -2,7 +2,7 @@
 namespace JobSeekerDatabase;
 
 function getJobSeekerInfo($id) {
-	require("db_confg.php");
+	require("../db_confg.php");
 	$sql = "SELECT job_seeker_id, first_name, last_name, email, gender, date_of_birth, education_level FROM job_seeker WHERE job_seeker_id = ?";
 	$result = $con->execute_query($sql, $id);
 	if ($result->num_rows == 1) {
@@ -14,7 +14,7 @@ function getJobSeekerInfo($id) {
 
 function signUpJobSeeker($firstname, $lastname, $email, $gender, $date_of_birth, $password) {
 	$hashed_password = password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 2048, 'time_cost' => 4, 'threads' => 1]);
-	require("db_config.php");
+	require("../db_config.php");
 	$sql = "INSERT INTO job_seeker(first_name, last_name, email, gender, date_of_birth, password) VALUES(?, ?, ?, ?, ?, ?)";
 	$result = $con->execute_query($sql, [$firstname, $lastname, $email, $gender, $date_of_birth, $hashed_password]);
 	if (!$result) {
@@ -73,7 +73,7 @@ function loginJobSeeker($email, $password) {
 
 function getUserIdFromSessionToken(string $session_token) {
 	$sql = "SELECT job_seeker_id FROM job_seeker_login_session WHERE session_token = ? AND is_active = 1";
-	require("db_config.php");
+	require("../db_config.php");
 	$result = $con->execute_query($sql, [$session_token]);
 	if ($result->num_rows > 0) {
 		return $result->fetch_row()[0];
@@ -84,7 +84,7 @@ function getUserIdFromSessionToken(string $session_token) {
 
 function getUserImageUrlFromId(int $id) {
 	$sql = "SELECT image_path FROM job_seeker_profile_image WHERE job_seeker_id = ?";
-	require("db_config.php");
+	require("../db_config.php");
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows > 0) {
 		return $result->fetch_row()[0];

@@ -37,7 +37,7 @@
 							<select name="company_type" id="company_type">
 								<?php
 								use function CompanyDatabase\getCompanyTypes;
-									require("../CompanyDatabase.php");
+									require("../database/CompanyDatabase.php");
 									$rows = CompanyDatabase\getCompanyTypes();
 									foreach ($rows as $row) {
 										$company_type_id = $row["company_type_id"];

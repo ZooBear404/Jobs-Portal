@@ -4,7 +4,7 @@ namespace CompanyDatabase;
 
 function signUpCompany($name, $company_type_id, $password, $industry_type, $country_id, $state_id, $founded_year, $website, $address, $description, $logo) {
 	$hashed_password = password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 2048, 'time_cost' => 4, 'threads' => 1]);
-	require("db_config.php");
+	require("../db_config.php");
 	$sql = "INSERT INTO company(name, company_type_id, industry_type_id, country_id, state_id, founded_year, website, address, description, password) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	$result = $con->execute_query($sql, [$name, $company_type_id,
 				$industry_type, $country_id, $state_id, $founded_year, $website, $address, $description, $hashed_password]);
@@ -39,7 +39,7 @@ function signUpCompany($name, $company_type_id, $password, $industry_type, $coun
 }
 
 function loginCompany($name, $password) {
-	require("db_config.php");
+	require("../db_config.php");
 
 	$find_company_sql = "SELECT password, company_id FROM company WHERE name = ?";
 	$result = $con->execute_query($find_company_sql, [$name]);
@@ -83,7 +83,7 @@ function loginCompany($name, $password) {
 }
 
 function getCompanyTypes() {
-	require("db_config.php");
+	require("../db_config.php");
 	$sql = "SELECT company_type_id, name FROM company_type;";
 	$result = $con->execute_query($sql);
 
@@ -91,7 +91,7 @@ function getCompanyTypes() {
 }
 
 function getIndustryTypes() {
-	require("db_config.php");
+	require("../db_config.php");
 	$sql = "SELECT industry_type_id, name FROM industry_type";
 	$result = $con->execute_query($sql);
 
@@ -99,7 +99,7 @@ function getIndustryTypes() {
 }
 
 function getCountries() {
-	require("db_config.php");
+	require("../db_config.php");
 	$sql = "SELECT country_id, name FROM country;";
 	$result = $con->execute_query($sql);
 
@@ -107,7 +107,7 @@ function getCountries() {
 }
 
 function getStates() {
-	require("db_config.php");
+	require("../db_config.php");
 	$sql = "SELECT state_id, name FROM state";
 	$result = $con->execute_query($sql);
 
@@ -116,7 +116,7 @@ function getStates() {
 
 function getCompanyIdFromSessionToken($session_token) {
 	$sql = "SELECT company_id FROM company_login_session WHERE is_active = 1 AND session_token = ?";
-	require("db_config.php");
+	require("../db_config.php");
 	$result = $con->execute_query($sql, [$session_token]);
 	if ($result->num_rows > 0) {
 		return $result->fetch_row()[0];
@@ -127,7 +127,7 @@ function getCompanyIdFromSessionToken($session_token) {
 
 function getCompanyLogoFromId(int $id) {
 	$sql = "SELECT cover_image_path FROM company_logo WHERE company_id = ?";
-	require("db_config.php");
+	require("../db_config.php");
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows > 0) {
 		$image = $result->fetch_assoc()['cover_image_path'];

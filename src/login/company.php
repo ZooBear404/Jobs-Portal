@@ -47,7 +47,7 @@
 
 								echo "<pre>$name, $password</pre>";
 
-								require("../CompanyDatabase.php");
+								require("../database/CompanyDatabase.php");
 								$result = CompanyDatabase\loginCompany($name, $password);
 								echo $result;
 							}

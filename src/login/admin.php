@@ -45,7 +45,7 @@
 								$email = $_POST['email'];
 								$password = $_POST['password'];
 
-								require("../AdminDatabase.php");
+								require("../database/AdminDatabase.php");
 
 								$result = AdminDatabase\loginAdmin($email, $password);
 								echo $result;

@@ -72,7 +72,7 @@
 									'$first_name', '$last_name', '$email', '$password', '$gender', '$date_of_birth'
 								</pre>";
 
-								require "../JobSeekerDatabase.php";
+								require "../database/JobSeekerDatabase.php";
 								$result = JobSeekerDatabase\signUpJobSeeker($first_name, $last_name, $email, $gender, $date_of_birth, $password);
 								if ($result) {
 									echo "<p class='success-text'>You Successfully Signed Up</p>";
