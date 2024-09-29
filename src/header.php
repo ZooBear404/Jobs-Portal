@@ -16,6 +16,8 @@
 					<a href="login/job_seeker.php"><div class="login">Login</div></a>';
 				}
 
+				$type;
+
 				session_start();
 				if (!isset($_SESSION['session_token'])) {
 			?>
@@ -24,7 +26,10 @@
 			<?php } else {
 
 				if ($_SESSION['type'] == 'job_seeker') {
-					require("db_config.php");
+
+					$type = 'job_seeker';
+
+					require("database/db_config.php");
 					$session_token = $_SESSION["session_token"];
 					require("database/JobSeekerDatabase.php");
 					$id = JobSeekerDatabase\getUserIdFromSessionToken($session_token);
@@ -32,7 +37,10 @@
 
 					echo "<img src='static/images/profiles/$image_url' alt='P' height='50px'>";
 				} else if ($_SESSION["type"] == "company") {
-					require("db_config.php");
+
+					$type = 'company';
+
+					require("database/db_config.php");
 					$session_token = $_SESSION["session_token"];
 					require("database/CompanyDatabase.php");
 					$id = CompanyDatabase\getCompanyIdFromSessionToken($session_token);
@@ -44,6 +52,9 @@
 
 					echo "<img src='static/images/profiles/$image_url' alt='P' height='50px'>";
 				} else if ($_SESSION["type"] = 'admin') {
+					
+					$type = 'admin';
+
 					echo "<p>Admin</p>";
 				}
 			 } ?>
