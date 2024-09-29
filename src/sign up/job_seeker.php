@@ -19,6 +19,7 @@
 		</div>
 		<div class="left">
 			<div class="login">
+				<div class="company-login"><a href="../login/company.php">Company</a></div>
 				<div class="login-button"><a href="../login/job_seeker.php">Login</a></div>
 			</div>
 			<div class="sign-up-form">
