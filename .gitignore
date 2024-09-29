@@ -3,7 +3,7 @@ node_modules/
 .git/
 
 # ignore passwords
-src/passwords.php
+src/database/passwords.php
 
 # ignore static files uploaded by users
 src/static/
