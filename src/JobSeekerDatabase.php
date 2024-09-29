@@ -64,10 +64,9 @@ function loginJobSeeker($email, $password) {
 
 	session_start();
 	$_SESSION['session_token'] = $session_token;
-	echo "session token set ";
-	echo $_SESSION['session_token'];
+	$_SESSION['type'] = 'job_seeker';
 
-	// header("location: ../index.php");
+	header("location: ../index.php");
 
 	return array(0, "Login Successful");
 }
