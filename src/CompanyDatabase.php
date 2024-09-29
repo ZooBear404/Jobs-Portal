@@ -112,3 +112,30 @@ function getStates() {
 
 	return $result->fetch_all(MYSQLI_ASSOC);
 }
+
+function getCompanyIdFromSessionToken($session_token) {
+	$sql = "SELECT company_id FROM company_login_session WHERE is_active = 1 AND session_token = ?";
+	require("db_config.php");
+	$result = $con->execute_query($sql, [$session_token]);
+	if ($result->num_rows > 0) {
+		return $result->fetch_row()[0];
+	} else {
+		return 0;
+	}
+}
+
+function getCompanyLogoFromId(int $id) {
+	$sql = "SELECT cover_image_path FROM company_logo WHERE company_id = ?";
+	require("db_config.php");
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows > 0) {
+		$image = $result->fetch_assoc()['cover_image_path'];
+		if ($image == '') {
+			return "default_profile_image.png";
+		}
+
+		return $image;
+	} else {
+		return "default_profile_image.png";
+	}
+}
