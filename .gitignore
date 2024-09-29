@@ -4,3 +4,6 @@ node_modules/
 
 # ignore passwords
 src/passwords.php
+
+# ignore static files uploaded by users
+src/static/
