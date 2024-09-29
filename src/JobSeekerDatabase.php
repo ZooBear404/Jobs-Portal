@@ -25,10 +25,10 @@ function signUpJobSeeker($firstname, $lastname, $email, $gender, $date_of_birth,
 }
 
 function loginJobSeeker($email, $password) {
-	$hashed_password = password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 2048, 'time_cost' => 4, 'threads' => 1]);
 	require("../db_config.php");
-	$find_user_sql = "SELECT job_seeker_id FROM job_seeker WHERE email = ? AND password = ?";
-	$result = $con->execute_query($find_user_sql, [$email, $hashed_password]);
+
+	$find_user_sql = "SELECT password, job_seeker_id FROM job_seeker WHERE email = ?";
+	$result = $con->execute_query($find_user_sql, [$email]);
 	if ($result->num_rows != 1) {
 		return array(4, "Error finding user");
 	}
@@ -36,9 +36,14 @@ function loginJobSeeker($email, $password) {
 		return array(1, "Email not found");
 	}
 
-	$job_seeker_id = $result->fetch_row()[0];
-	print("job seeker id: ");
-	print($job_seeker_id);
+	$fetched = $result->fetch_assoc();
+	$job_seeker_password = $fetched["password"];
+	$verify = password_verify($password, $job_seeker_password);
+	if (!$verify) {
+		return array(1, "Passwords do not match");
+	}
+
+	$job_seeker_id = $fetched['job_seeker_id'];
 
 	$sql = "UPDATE job_seeker_login_session SET is_active = false WHERE job_seeker_id = ?";
 	$result = $con->execute_query($sql, [$job_seeker_id]);
