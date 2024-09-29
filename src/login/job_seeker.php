@@ -13,7 +13,7 @@
 			<div class="logo">Name</div>
 			<div class="title">Job Seeker</div>
 			<div class="footer">
-				<div class="admin-login"><a href="admin-login.php">Admin</a></div>
+				<div class="admin-login"><a href="admin.php">Admin</a></div>
 				<div class="review">Review from userReview from users</div>
 			</div>
 
