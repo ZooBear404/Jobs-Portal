@@ -36,3 +36,51 @@ function loginAdmin($email, $password) {
 
 	return "Successfully logged in";
 }
+
+function getJobSeekerList() {
+	require("db_config.php");
+
+	$sql = "SELECT job_seeker_id, first_name, last_name FROM job_seeker;";
+	$result = $con->execute_query($sql);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getJobsList() {
+	require("db_config.php");
+
+	$sql = "SELECT job_id, name, company_id FROM job;";
+	$result = $con->execute_query($sql);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getJobApplicationsList() {
+	require("db_config.php");
+
+	$sql = "SELECT job_application_id, job_seeker_id, job_id, job_seeker_cv_id, is_reviewed, is_accepted FROM job_application;";
+	$result = $con->execute_query($sql);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getCompaniesList() {
+	require("db_config.php");
+
+	$sql = "SELECT company_id, name FROM company;";
+	$result = $con->execute_query($sql);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
