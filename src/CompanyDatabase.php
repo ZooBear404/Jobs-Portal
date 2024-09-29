@@ -73,7 +73,8 @@ function loginCompany($name, $password) {
 
 
 	session_start();
-	$_SESSION['company_session_token'] = $session_token;
+	$_SESSION['session_token'] = $session_token;
+	$_SESSION['type'] = 'company';
 
 	header("location: ../company_index.php");
 
