@@ -1,4 +1,5 @@
 <?php
+
 namespace JobSeekerDatabase;
 
 function getJobSeekerInfo($id) {
@@ -55,7 +56,7 @@ function loginJobSeeker($email, $password) {
 
 	$session_token = bin2hex(random_bytes(100));
 	$today = date("Y-m-d");
-	$expiration_date = date('Y-m-d', strtotime($today.' + 10 days'));
+	$expiration_date = date('Y-m-d', strtotime($today . ' + 10 days'));
 
 	$sql = "INSERT INTO job_seeker_login_session(job_seeker_id, session_token, session_expiration) VALUES(?, ?, ?);";
 	$result = $con->execute_query($sql, [$job_seeker_id, $session_token, $expiration_date]);
@@ -92,7 +93,6 @@ function getUserImageUrlFromId(int $id) {
 	} else {
 		return "default_profile_image.png";
 	}
-
 }
 
 function getJobSeekerNameById(int $id) {
@@ -122,6 +122,99 @@ function getJobApplicationListByJobSeekerId(int $id) {
 
 	$sql = "SELECT job_application_id, job_id, job_seeker_cv_id, is_reviewed, is_accepted FROM job_application WHERE job_seeker_id = ?";
 	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getJobSeekerEducationById(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT institute_id, field_of_study_id, education_level_id FROM job_seeker_education WHERE job_seeker_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getEducationLevelNameFromId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT name FROM education_level WHERE education_level_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result->fetch_row()[0];
+}
+
+function getFieldOfStudyNameFromId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT name FROM field_of_study WHERE field_of_study_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result->fetch_row()[0];
+}
+
+function getInstituteNameFromId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT name FROM institute WHERE institute_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result->fetch_row()[0];
+}
+
+// From now on, a different approach
+
+function getColumnNamesFromTableWithId(array $columnNames, string $table, int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT ?";
+	for ($i = 1; $i < count($columnNames); $i++) {
+		$sql = $sql . ", ? ";
+	}
+
+	$sql = $sql . "FROM $table" . " WHERE " . "job_seeker_id = ?";
+
+	array_push($columnNames, $id);
+
+	// echo $sql;
+
+	$result = $con->execute_query($sql, $columnNames);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getNameByTablePrimaryKey(string $table, int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT name FROM " . $table . " WHERE " . $table . "_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_row()[0];
+}
+
+function getColumnNamesFromTable(array $columnNames, string $table) {
+	require("db_config.php");
+
+	$sql = "SELECT ?";
+	for ($i = 1; $i < count($columnNames); $i++) {
+		$sql = $sql . ", ? ";
+	}
+
+	$sql = $sql . "FROM $table";
+
+	$result = $con->execute_query($sql, $columnNames);
 	if ($result->num_rows == 0) {
 		return 0;
 	}
