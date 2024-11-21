@@ -1,5 +1,11 @@
 <?php require("header.php"); ?>
 
+<?php 
+	use function AdminDatabase\loginAdmin;
+	loginAdmin("zubairstudytech@gmail.com", "admin@123");
+
+?>
+
 
 <?php if ($type == 'job_seeker') { ?>
 
@@ -48,7 +54,6 @@
 					echo "<p>Lastname: $last_name</p>";
 					echo "<p>Email: $email</p>";
 					echo "<p>Date of Birth: $date_of_birth</p>";
-					echo "<p>Field Of Study: $</p>"
 					?>
 				</div>
 				<div class="right">
@@ -73,7 +78,6 @@
 									$institute_id = $row["institute_id"];
 									$institute_name = JobSeekerDatabase\getInstituteNameFromId($institute_id);
 									$field_of_study_id = $row["field_of_study_id"];
-									$field_of_study_name = JobSeekerDatabase\getFieldOfStudyNameFromId($field_of_study_id);
 									$education_level_id = $row["education_level_id"];
 									$education_level_name = JobSeekerDatabase\getEducationLevelNameFromId($education_level_id);
 
@@ -162,13 +166,14 @@
 						</div>
 						<div class="job-seeker-skills-list">
 							<?php
-							$rows = JobSeekerDatabase\getColumnNamesFromTableWithId(['skill_id', 'name'], 'job_seeker_skill', $job_seeker_id);
+							$rows = JobSeekerDatabase\getColumnNamesFromTableWithId(['skill_id'], 'job_seeker_skill', $job_seeker_id);
 							if ($rows == 0) {
 								echo "<p>No Skills Found</p>";
 							} else {
 								foreach ($rows as $row) {
 									$skill_id = $row["skill_id"];
-									$skill_name = $skill_row['name'];
+									$row = JobSeekerDatabase\getColumnNamesFromTable(['title'], "skill");
+									$skill_name = $row['skill_name'];
 
 									echo "<div class='job-seeker-skill'>
 										<div class='job-seeker-skill-left'>

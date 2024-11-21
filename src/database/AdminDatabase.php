@@ -2,10 +2,10 @@
 
 namespace AdminDatabase;
 
-function loginAdmin($email, $password) {
-	$sql = "SELECT admin_id, password FROM admin WHERE email = ?";
+function loginAdmin($name, $password) {
+	$sql = "SELECT admin_id, password FROM admin WHERE name = ?";
 	require("db_config.php");
-	$result = $con->execute_query($sql, [$email]);
+	$result = $con->execute_query($sql, [$name]);
 	if ($result->num_rows == 0) {
 		return "Admin not found";
 	}

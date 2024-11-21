@@ -132,7 +132,7 @@ function getJobApplicationListByJobSeekerId(int $id) {
 function getJobSeekerEducationById(int $id) {
 	require("db_config.php");
 
-	$sql = "SELECT institute_id, field_of_study_id, education_level_id FROM job_seeker_education WHERE job_seeker_id = ?";
+	$sql = "SELECT institute_id, education_level_id FROM job_seeker_education WHERE job_seeker_id = ?";
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows == 0) {
 		return 0;
@@ -178,7 +178,7 @@ function getColumnNamesFromTableWithId(array $columnNames, string $table, int $i
 		$sql = $sql . ", ? ";
 	}
 
-	$sql = $sql . "FROM $table" . " WHERE " . "job_seeker_id = ?";
+	$sql = $sql . " FROM $table" . " WHERE " . "job_seeker_id = ?";
 
 	array_push($columnNames, $id);
 
