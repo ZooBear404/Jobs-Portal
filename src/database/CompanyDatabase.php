@@ -28,6 +28,8 @@ function signUpCompany($name, $company_type_id, $password, $industry_type, $coun
 
 	$target_path = "static/images/profiles/";
 	$target_path = $target_path . basename($logo['name']);
+	
+	echo $target_path;
 
 	if (move_uploaded_file($logo['tmp_name'], $target_path)) {
 		echo "file moved";
