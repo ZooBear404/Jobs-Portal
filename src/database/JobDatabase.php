@@ -56,3 +56,15 @@ function postJob($company_id, $title, $summary, $duties,
 
 	return true;
 }
+
+function job_delete($job_id) {
+
+}
+
+function job_update($job_id) {
+
+}
+
+function job_read() {
+
+}

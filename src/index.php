@@ -328,12 +328,12 @@
 						foreach ($rows as $row) {
 							$job_id = $row["job_id"];
 							$job_name = $row["name"];
-							$job_applications = CompanyDatabase\getJobApplicationsForJobId($job_id);
+							$job_applications = CompanyDatabase\getNumberOfJobApplicationsForJobId($job_id);
 
 							echo "<a href='crud/job_application/job_applicants.php?$job_id'>
 									<div class='company-job'>
 									<p class='company-job-name'>$job_name</p>
-									<p class='company-job-applicants'>$job_applications</p>
+									<p class='company-job-applicants'> " . $job_applications[0]['total_rows'] . " </p>
 									</div>
 								</a>";
 						}

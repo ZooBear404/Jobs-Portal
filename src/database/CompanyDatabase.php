@@ -157,20 +157,33 @@ function getCompanyNameFromId(int $id) {
 function getListOfJobsPostedByCompanyId(int $id) {
 	require("db_config.php");
 
-	$sql = "SELECT job_id, name, job_summary, close_date FROM job WHERE company_id = ? AND close_date < CURDATE();";
+	$sql = "SELECT job_id, name, job_summary, close_date FROM job WHERE company_id = ? AND close_date > CURDATE();";
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows == 0) {
 		return 0;
 	}
 
-	return $result->fetch_assoc();
+	return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-function getJobApplicationsForJobId(int $id) {
+function getNumberOfJobApplicationsForJobId(int $id) {
 	require("db_config.php");
 
 	$sql = "SELECT COUNT(*) AS total_rows FROM job_application WHERE job_id = ?";
 	$result = $con->execute_query($sql, [$id]);
 
-	return $result;
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+
+function getJobApplicationsForJobId(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT job_application_id, job_seeker_id, job_seeker_cv_id, time_created, is_reviewed, is_accepted FROM job_application WHERE job_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
 }

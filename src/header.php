@@ -53,7 +53,6 @@
 
 					require("database/db_config.php");
 					$session_token = $_SESSION["session_token"];
-					require("database/CompanyDatabase.php");
 					$id = CompanyDatabase\getCompanyIdFromSessionToken($session_token);
 					if ($id == null) {
 						echo_signups();
@@ -61,7 +60,7 @@
 					}
 					$image_url = CompanyDatabase\getCompanyLogoFromId($id);
 
-					echo "<img src='static/images/profiles/$image_url' alt='P' height='50px'>";
+					echo "<img src='static/images/profiles/$image_url' height='50px'>";
 				} else if ($_SESSION["type"] = 'admin') {
 
 					$type = 'admin';
