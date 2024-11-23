@@ -104,6 +104,9 @@
 				
 				<label for="gender_female">Female</label>
 				<input type="radio" name="gender" id="gender_female" value="F">
+
+				<label for="gender_either">Either</label>
+				<input type="radio" name="gender" id="gender_either" value="E">
 			</div>
 		</div>
 

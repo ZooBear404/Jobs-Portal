@@ -212,7 +212,7 @@ function getColumnNamesFromTable(array $columnNames, string $table) {
 		$sql = $sql . ", ? ";
 	}
 
-	$sql = $sql . "FROM $table";
+	$sql = $sql . " FROM $table";
 
 	$result = $con->execute_query($sql, $columnNames);
 	if ($result->num_rows == 0) {

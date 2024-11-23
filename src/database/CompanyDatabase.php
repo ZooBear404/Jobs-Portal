@@ -145,7 +145,7 @@ function getCompanyLogoFromId(int $id) {
 
 function getCompanyNameFromId(int $id) {
 	require("db_config.php");
-	$sql = "SELECT name FROM company WHERE id = ?";
+	$sql = "SELECT name FROM company WHERE company_id = ?";
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows == 0) {
 		return 0;

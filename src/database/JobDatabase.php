@@ -2,6 +2,31 @@
 
 namespace JobDatabase;
 
+
+function getJobInfo(int $id) {
+	require("db_config.php");
+
+	$sql = "SELECT * FROM job WHERE job_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if ($result->num_rows != 1) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getJobList(){ 
+	require("db_config.php");
+
+	$sql = "SELECT * FROM job;";
+	$result = $con->execute_query($sql);
+	if ($result->num_rows == 0) {
+		return 0;
+	}
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 function getJobNameById(int $id) {
 	require("db_config.php");
 	$sql = "SELECT name FROM job WHERE job_id = ?";
@@ -55,6 +80,30 @@ function postJob($company_id, $title, $summary, $duties,
 	}
 
 	return true;
+}
+
+function getContractTypeById($id) {
+	require("db_config.php");
+	$sql = "SELECT name from contract_type WHERE contract_type_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result->fetch_row();
+}
+
+function getEducationLevelNameById($id) {
+	require("db_config.php");
+	$sql = "SELECT name FROM education_level WHERE education_level_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result->fetch_row();
+}
+
+function getEmploymentTypeNameById($id){ 
+	require("db_config.php");
+	$sql = "SELECT name FROM employment_type WHERE employment_type_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+
+	return $result->fetch_row();
 }
 
 function job_delete($job_id) {
