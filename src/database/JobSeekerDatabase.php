@@ -120,7 +120,7 @@ function getJobCvPathFromId(int $id) {
 function getJobApplicationListByJobSeekerId(int $id) {
 	require("db_config.php");
 
-	$sql = "SELECT job_application_id, job_id, job_seeker_cv_id, is_reviewed, is_accepted FROM job_application WHERE job_seeker_id = ?";
+	$sql = "SELECT job_application_id, job_id, is_reviewed, is_accepted, time_created FROM job_application WHERE job_seeker_id = ?";
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows == 0) {
 		return 0;

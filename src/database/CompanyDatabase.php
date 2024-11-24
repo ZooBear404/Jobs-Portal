@@ -117,7 +117,7 @@ function getStates() {
 }
 
 function getCompanyIdFromSessionToken($session_token) {
-	$sql = "SELECT company_id FROM company_login_session WHERE is_active = 1 AND session_token = ?";
+	$sql = "SELECT company_id FROM company_login_session WHERE session_token = ? ORDER BY time_created ASC";
 	require("db_config.php");
 	$result = $con->execute_query($sql, [$session_token]);
 	if ($result->num_rows > 0) {
@@ -157,7 +157,7 @@ function getCompanyNameFromId(int $id) {
 function getListOfJobsPostedByCompanyId(int $id) {
 	require("db_config.php");
 
-	$sql = "SELECT job_id, name, job_summary, close_date FROM job WHERE company_id = ? AND close_date > CURDATE();";
+	$sql = "SELECT job_id, name, job_summary, close_date FROM job WHERE company_id = ?";
 	$result = $con->execute_query($sql, [$id]);
 	if ($result->num_rows == 0) {
 		return 0;
