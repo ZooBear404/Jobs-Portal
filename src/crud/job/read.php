@@ -43,7 +43,12 @@
 			if ($user == "Admin" || $user == "Company") {
 				echo "<a href='delete.php?id=$job_id'><button class=''>Delete Job</button></a>";
 			} else if ($user == "JobSeeker") {
-				echo "<a href='apply.php?id=$job_id'><button>Apply</button></a>";
+				$job_seeker_id = JobSeekerDatabase\getUserIdFromSessionToken($_SESSION['session_token']);
+				if (JobDatabase\isJobAppliedForByJobSeeker($job_id, $job_seeker_id)) {
+					echo "<p>Applied</p>";
+				} else {
+					echo "<a href='apply.php?id=$job_id'><button>Apply</button></a>";
+				}
 			}
 
 			echo "<div>$close_date</div>";
