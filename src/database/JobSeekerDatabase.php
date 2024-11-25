@@ -96,14 +96,14 @@ function getUserImageUrlFromId(int $id) {
 }
 
 function getJobSeekerNameById(int $id) {
-	$sql = "SELECT name FROM job_seeker WHERE job_seeker_id = ?";
+	$sql = "SELECT first_name, last_name FROM job_seeker WHERE job_seeker_id = ?";
 	require("db_config.php");
 	$result = $con->execute_query($sql, [$id]);
-	if ($result->num_rows > 0) {
+	if ($result->num_rows < 1) {
 		return 0;
 	}
 
-	return $result->fetch_row()[0];
+	return $result->fetch_row();
 }
 
 function getJobCvPathFromId(int $id) {
@@ -220,4 +220,27 @@ function getColumnNamesFromTable(array $columnNames, string $table) {
 	}
 
 	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Danger zone
+function deleteJobSeeker($id) {
+	require("db_config.php");
+	$sql = "DELETE FROM job_seeker WHERE job_seeker_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if (!$result) {
+		return 0;
+	}
+
+	return 1;
+}
+
+function updateJobSeeker($id, $firstname, $lastname, $email, $gender, $date_of_birth, $password) {
+	require("db_config.php");
+	$sql = "UPDATE job_seeker SET first_name = ?, last_name = ?, email = ?, gender = ?, date_of_birth = ?, password = ? WHERE job_seeker_id = ?";
+	$result = $con->execute_query($sql, [$first_name, $last_name, $email, $gender, $date_of_birth, $password, $id]);
+	if (!$result) {
+		return 0;
+	}
+
+	return 1;
 }
