@@ -457,18 +457,14 @@
 							$job_name = JobDatabase\getJobNameById($job_id);
 							$job_seeker_id = $row["job_seeker_id"];
 							$job_seeker_name = JobSeekerDatabase\getJobSeekerNameById($job_seeker_id);
-							$job_seeker_cv_id = $row["job_seeker_cv_id"];
-							$job_seeker_cv_path = JobSeekerDatabase\getJobCvPathFromId($job_seeker_cv_id);
-							$job_seeker_cv_basename = basename($job_seeker_cv_path);
 							$job_seeker_image_path = JobSeekerDatabase\getUserImageUrlFromId($job_seeker_id);
 
 							echo "<div class='admin-job-application'>
 									<p>$job_name</p>
 									<div>
-										<img src='$image_url$job_seeker_image_path'>
+										<img src='$images_url$job_seeker_image_path'>
 										<div>
-											<p>$job_seeker_name</p>
-											<p>$job_seeker_cv_basename</p>
+											<p>$job_seeker_name[0] $job_seeker_name[1]</p>
 										</div>
 										<a href='crud/job_application/delete.php?$job_application_id'>
 									<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
@@ -533,7 +529,7 @@
 					<p>Jobs Announced</p>
 					<div class="jobs-announced-list">
 						<?php
-						$rows = JobSeekerDatabase\getColumnNamesFromTable(['job_id', 'name', 'company_id', 'time_created', 'close_date'], 'job');
+						$rows = JobDatabase\getJobList();
 						if ($rows == 0) {
 							echo "<p>No Jobs Announced</p>";
 						} else {
@@ -545,9 +541,10 @@
 								$company_id = $row["company_id"];
 								$company_name = JobSeekerDatabase\getNameByTablePrimaryKey("company", $company_id);
 								$company_logo = CompanyDatabase\getCompanyLogoFromId($company_id);
+								$images_url = "./static/images/profiles/";
 
 								echo '<a href="crud/job/read.php?id=' . $job_id . '"><div class="job">
-										<img src=$images_url$company_logo">
+										<img src='.$images_url.$company_logo.'>
 										<div class="left>
 											<div class="job-information">
 												<p>' . $job_name . '</p>
