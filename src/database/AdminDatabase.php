@@ -64,7 +64,7 @@ function getJobsList() {
 function getJobApplicationsList() {
 	require("db_config.php");
 
-	$sql = "SELECT job_application_id, job_seeker_id, job_id, job_seeker_cv_id, is_reviewed, is_accepted FROM job_application;";
+	$sql = "SELECT job_application_id, job_seeker_id, job_id, is_reviewed, is_accepted FROM job_application;";
 	$result = $con->execute_query($sql);
 	if ($result->num_rows == 0) {
 		return 0;
