@@ -30,7 +30,7 @@
 					<form action="" method="post">
 						<div class="div-first_name">
 							<label for="email_input">Email</label>
-							<input type="email" name="email" id="email_input" required>
+							<input type="text" name="email" id="email_input" required>
 						</div>
 						<div class="div-password">
 							<label for="password_input">Password</label>
