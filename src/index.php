@@ -1,20 +1,14 @@
 <?php require("header.php"); ?>
 
-<?php 
-	use function AdminDatabase\loginAdmin;
-	loginAdmin("zubairstudytech@gmail.com", "admin@123");
-
-?>
-
-
 <?php if ($type == 'job_seeker') { ?>
 
-	<div class="container">
+	<div class="container flex flex-col gap-5 p-3">
 
-		<div class="top">
-			<div class="job_seeker-submitted-apps">
-				<p>Submitted Applications</p>
-				<div class="job_seeker-submitted-apps-list">
+		<div class="grid grid-cols-3 grid-rows-1 gap-5 p-2 bg-slate-600 top">
+			
+			<div class="flex flex-col col-span-1 gap-1 p-1 overflow-y-auto grid-sa bg-yellow-50 job_seeker-submitted-apps">
+				<p class="text-xl">Submitted Applications</p>
+				<div class="flex flex-col gap-2 job_seeker-submitted-apps-list">
 					<?php
 					$job_seeker_id = JobSeekerDatabase\getUserIdFromSessionToken($_SESSION['session_token']);
 					$rows = JobSeekerDatabase\getJobApplicationListByJobSeekerId($job_seeker_id);
@@ -28,29 +22,32 @@
 							$job_seeker_first_name = $job_seeker_info['first_name'];
 							$job_seeker_last_name = $job_seeker_info['last_name'];
 
-							echo "<a href='./crud/job/read.php?id=$job_id'>";
+							echo "<a href='./crud/job/read.php?id=$job_id' class=''>";
 							$job_application_status;
 							if ($row["is_accepted" == 'T']) {
 								$job_application_status = "accepted";
-								echo "<div class='job-application job-application-accepted>";
+								echo "<div class='p-1 bg-green-400 hover:bg-yellow-100 job-application job-application-accepted'>";
 							} else if ($row["is_reviewed"] == 'T') {
 								$job_application_status = "reviewed";
-								echo "<div class='job-application job-application-reviewed'>";
+								echo "<div class='p-1 bg-green-100 hover:bg-yellow-100 job-application job-application-reviewed'>";
 							} else {
 								$job_application_status = "applied";
-								echo "<div class='job-application'>";
+								echo "<div class='p-1 job-application bg-slate-300 hover:bg-yellow-100'>";
 							}
 
 							$time_created = $row['time_created'];
 							echo "<div>$job_name</div>";
-							echo "<div>$time_created</div></a>";
+							echo "<div>$time_created</div></div></a>";
 						}
 					}
 					?>
 				</div>
 			</div>
-			<div class="job_seeker-info">
-				<div class="left">
+
+			<div class="grid col-span-2 gap-1 p-1 overflow-y-auto bg-stone-200 job_seeker-info">
+			<p class="text-xl">Information</p>
+			<div class="grid grid-cols-2 gap-1">
+				<div class="flex flex-col gap-2 left">
 					<?php
 					$results = JobSeekerDatabase\getJobSeekerInfo($job_seeker_id);
 					$first_name = $results['first_name'];
@@ -63,9 +60,9 @@
 					echo "<p>Date of Birth: $date_of_birth</p>";
 					?>
 				</div>
-				<div class="right">
+				<div class="flex flex-col gap-2 overflow-y-auto right">
 					<div class="job_seeker-educations">
-						<div class="job-seeker-educations-header">
+						<div class="flex justify-between job-seeker-educations-header">
 							<p>Education</p>
 							<?php
 							echo "<a href='crud/job_seeker/education/create.php?id=$job_seeker_id'>";
@@ -96,8 +93,8 @@
 											</div>
 											<div class='right-education'>
 												<a href='crud/job_seeker/education/delete.php?job_seeker_id=$job_seeker_id&id=$institute_id'>d<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
-  <path stroke-linecap='round' stroke-linejoin='round' d='M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z' />
-</svg></a>
+												<path stroke-linecap='round' stroke-linejoin='round' d='M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z' />
+												</svg></a>
 
 											</div>
 										</div>";
@@ -109,7 +106,7 @@
 						</ul>
 					</div>
 					<div class="job-seeker-experiences">
-						<div class="job-seeker-experiences-header">
+						<div class="flex justify-between job-seeker-experiences-header">
 							<p>Experiences</p>
 							<?php
 							echo "<a href='crud/job_seeker/experience/create.php?id=$job_seeker_id'>";
@@ -160,7 +157,7 @@
 
 					</div>
 					<div class="job-seeker-skills">
-						<div class="job-seeker-skills-header">
+						<div class="flex justify-between job-seeker-skills-header">
 							<p>Skills</p>
 
 							<?php
@@ -208,7 +205,7 @@
 
 					</div>
 					<div class="job-seeker-languages">
-						<div class="job-seeker-languages-header">
+						<div class="flex justify-between job-seeker-languages-header">
 							<p>Languages</p>
 
 							<?php
@@ -255,15 +252,14 @@
 
 							?>
 						</div>
-
+					</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="bottom">
-			<div class="job_seeker-jobs">
-				<div class="job-seeker-jobs-announced">
-					<div class="job-seeker-saved-jobs">
+		<div class="p-1 bg-orange-300 bottom">
+			<div class="grid grid-cols-5 p-1 job_seeker-jobs">
+					<div class="col-span-1 job-seeker-saved-jobs">
 						<p>Saved Jobs</p>
 						<?php
 						$rows = JobSeekerDatabase\getColumnNamesFromTableWithId(['saved_job_id', 'job_id'], 'saved_job', $job_seeker_id);
@@ -274,7 +270,7 @@
 								$job_id = $row['job_id'];
 								$job_name = JobSeekerDatabase\getNameByTablePrimaryKey('job', $job_id);
 
-								echo "<a href='crud/job/read.php?job_id=$job_id'>
+								echo "<a href='crud/job/read.php?id=$job_id'>
 									<div>$job_name</div>
 								</a>";
 							}
@@ -282,9 +278,9 @@
 						?>
 
 					</div>
-					<div class="jobs">
+					<div class="flex flex-col col-span-4 p-1 jobs">
 						<p>Jobs Announced</p>
-						<div class="jobs-announced-list">
+						<div class="flex flex-col gap-1 overflow-y-visible jobs-announced-list">
 							<?php
 							$rows = JobDatabase\getJobList();
 							if ($rows == 0) {
@@ -295,21 +291,26 @@
 									$job_name = $row["name"];
 									$job_time_created = $row["time_created"];
 									$job_close_date = $row["close_date"];
+									$job_seeker_id = JobSeekerDatabase\getUserIdFromSessionToken($_SESSION['session_token']);
 									$company_id = $row["company_id"];
 									// $company_name = JobSeekerDatabase\getNameByTablePrimaryKey("company", $company_id);
 									$company_name = CompanyDatabase\getCompanyNameFromId($company_id);
 									$company_logo = CompanyDatabase\getCompanyLogoFromId($company_id);
 
-									echo $images_url.$company_logo;
-									echo '<a href="crud/job/read.php?id=' . $job_id . '"><div class="job">
-										<img src=' . $images_url . $company_logo . '>
-										<div class="left>
-											<div class="job-information">
-												<p>' . $job_name . '</p>
-												<p>' . $job_close_date . '</p>
+									$images_url = "./static/images/profiles/";
+									echo "<div class='flex items-center justify-between p-2 bg-blue-300 align-center'>
+										<a href='crud/job/read.php?id=$job_id' class='flex flex-grow gap-2'>
+											<img src=$images_url$company_logo class='h-16 w-16 rounded-[50%]'>
+											<div>
+												<p>$job_name</p>
+												<div class='flex gap-2 justify-evenly'>
+													<p class=''>Posted: $time_created</p>
+													<p>Expires: $job_close_date</p>
+												</div>
 											</div>
-										</div>
-									</div></a>';
+											</a>
+											<a href='crud/job/save.php?job_id=$job_id&job_seeker_id=$job_seeker_id'>Save</a>
+										</div>";
 								}
 							}
 
@@ -318,8 +319,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
 	</div>
 
 <?php } else if ($type == 'company') { ?>
@@ -524,10 +523,10 @@
 <?php } else { ?>
 	<div class="no-login-container">
 		<div class="job_seeker-jobs">
-			<div class="job-seeker-jobs-announced">
-				<div class="jobs">
-					<p>Jobs Announced</p>
-					<div class="jobs-announced-list">
+			<div class="flex items-center justify-center job-seeker-jobs-announced">
+				<div class="flex flex-col gap-5 jobs">
+					<p class="text-xl">Jobs Announced</p>
+					<div class="flex flex-col gap-2 jobs-announced-list">
 						<?php
 						$rows = JobDatabase\getJobList();
 						if ($rows == 0) {
@@ -543,15 +542,17 @@
 								$company_logo = CompanyDatabase\getCompanyLogoFromId($company_id);
 								$images_url = "./static/images/profiles/";
 
-								echo '<a href="crud/job/read.php?id=' . $job_id . '"><div class="job">
-										<img src='.$images_url.$company_logo.'>
-										<div class="left>
-											<div class="job-information">
-												<p>' . $job_name . '</p>
-												<p>' . $job_close_date . '</p>
+								echo "<div class='job'>
+									<a href='crud/job/read.php?id=$job_id' class='flex justify-between gap-5'>
+										<img src=$images_url$company_logo class='h-12 rounded-[50%]'>
+										<div class='left'>
+											<div class='job-information'>
+												<p> $job_name </p>
+												<p> $job_close_date </p>
 											</div>
 										</div>
-									</div></a>';
+									</a>
+									</div>";
 							}
 						}
 						?>

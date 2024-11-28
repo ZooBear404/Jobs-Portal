@@ -14,15 +14,15 @@
 	<title>Document</title>
 </head>
 
-<body>
-	<div class="nav">
-		<div class="logo">Name</div>
+<body class="">
+	<div class="flex justify-between p-3 nav">
+		<div class="text-lg font-semibold logo">Name</div>
 		<div class="buttons">
 			<?php
 
 			function echo_signups() {
-				echo '<a href="sign up/job_seeker.php"><div class="sign-up">Sign Up</div></a>
-					<a href="login/job_seeker.php"><div class="login">Login</div></a>';
+				echo '<div class="flex gap-2"><a href="sign up/job_seeker.php"><div class="sign-up">Sign Up</div></a>
+					<a href="login/job_seeker.php"><div class="login">Login</div></a></div>';
 			}
 
 			$type;
@@ -32,12 +32,12 @@
 			?>
 				<?php
 				
-				echo "<a href='$path/sign up/job_seeker.php'>
+				echo "<div class='flex gap-5'><a href='$path/sign up/job_seeker.php'>
 					<div class='sign-up'>Sign Up</div>
 				</a>";
 				echo "<a href='$path/login/job_seeker.php'>
 					<div class='login'>Login</div>
-				</a>";
+				</a></div>";
 				?>
 			<?php } else {
 
@@ -50,7 +50,7 @@
 					$id = JobSeekerDatabase\getUserIdFromSessionToken($session_token);
 					$image_url = JobSeekerDatabase\getUserImageUrlFromId($id);
 
-					echo "<img src='static/images/profiles/$image_url' alt='P' height='50px'>";
+					echo "<img src='/src/static/images/profiles/$image_url' alt='P' height='5rem' class='h-10'>";
 				} else if ($_SESSION["type"] == "company") {
 
 					$type = 'company';
