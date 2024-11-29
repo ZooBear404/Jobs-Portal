@@ -1,4 +1,7 @@
-<?php require("../../header.php"); ?>
+<?php 
+	require("../../header.php"); 
+?>
+<link rel="stylesheet" href="../../output.css">
 
 <?php
 	// Check if the user is Company, Anonymous, JobSeeker, or Admin
@@ -18,6 +21,7 @@
 
 ?>
 
+<div class="flex flex-col items-center justify-center gap-5 p-10">
 
 <div class="top">
 	<?php
@@ -31,7 +35,10 @@
 		
 		$images_url = "../../static/images/profiles/";
 
-		echo "<div><img src='$images_url$company_logo' height='150rem'><p>$job_name</p></div>";
+		echo "<div class='flex flex-col items-center justify-center gap-4'>
+				<img src='$images_url$company_logo' height='200rem' width='200rem' class='rounded-[10%]'>
+				<p class='text-xl'>$job_name</p>
+			</div>";
 	?>
 
 </div>
@@ -41,20 +48,20 @@
 			$close_date = $result['closing_date'];
 			// the "Apply" Button
 			if ($user == "Admin" || $user == "Company") {
-				echo "<a href='delete.php?id=$job_id'><button class=''>Delete Job</button></a>";
+				echo "<a href='delete.php?id=$job_id' class='w-6 h-3'><button class=''>Delete Job</button></a>";
 			} else if ($user == "JobSeeker") {
 				$job_seeker_id = JobSeekerDatabase\getUserIdFromSessionToken($_SESSION['session_token']);
 				if (JobDatabase\isJobAppliedForByJobSeeker($job_id, $job_seeker_id)) {
-					echo "<p>Applied</p>";
+					echo "<p class='w-16 h-8 p-1 bg-blue-400'>Applied</p>";
 				} else {
-					echo "<a href='apply.php?id=$job_id'><button>Apply</button></a>";
+					echo "<a href='apply.php?id=$job_id' class='p-1'><button class='w-16 h-8 p-1 bg-blue-400 hover:bg-blue-700'>Apply</button></a>";
 				}
 			}
 
 			echo "<div>$close_date</div>";
 	?>
 </div>
-<div class="end">
+<div class="grid w-full grid-cols-2 p-4 bg-green-400 h-3/4 end">
 	<?php
 		$job_summary = $result['job_summary'];
 		$duties = $result['duties'];
@@ -73,48 +80,51 @@
 		$gender = $result['gender'];
 		$employment_type_id = JobDatabase\getEducationLevelNameById($result['employment_type_id']);
 
+		echo "<div class='flex flex-col p-3 bg-orange-300'>";
 		echo "<div>
-			<p>Job Summary</p>
+			<p class='text-lg'>Job Summary</p>
 			<p>$job_summary</p>
 		</div>";
 
 		echo "<div>
-			<p>Duties</p>
+			<p class='text-lg'>Duties</p>
 			<p>$duties</p>
 		</div>";
 
 		echo "<div>
-			<p>Requirements</p>
+			<p class='text-lg'>Requirements</p>
 			<p>$requirements</p>
 		</div>";
 
 		echo "<div>
-			<p>Submission Guidelines</p>
+			<p class='text-lg'>Submission Guidelines</p>
 			<p>$submission_guidelines</p>
 		</div>";
-
-		echo "<div>
-			<p>Time Created</p>
+		echo "</div>";
+		
+		echo "<div class='p-3 bg-orange-600'>";
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Time Created</p>
 			<p>$time_created</p>
 		</div>";
 
-		echo "<div>
-			<p>Number of Vacancies</p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Number of Vacancies</p>
 			<p>$number_of_vacancies</p>
 		</div>";
 
-		echo "<div>
-			<p>Salary Min</p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Salary Min</p>
 			<p>$salary_min</p>
 		</div>";
 
-		echo "<div>
-			<p>Salary Max</p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Salary Max</p>
 			<p>$salary_max</p>
 		</div>";
 
-		echo "<div>
-			<p>Years of Experience</p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Years of Experience</p>
 			<p>$years_of_experience ";
 		if ($years_of_experience == 1) {
 			echo "year</p>";
@@ -123,9 +133,8 @@
 		}
 		echo "</div>";
 
-
-		echo "<div>
-			<p>Probation Period</p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Probation Period</p>
 			<p>$probation_period ";
 		if ($probation_period == 1) {
 			echo "month</p>";
@@ -134,13 +143,13 @@
 		}
 		echo "</div>";
 
-		echo "<div>
-			<p>Contract Type</p>
-			<p>$contract_type</p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Contract Type</p>
+			<p>$contract_type[0]</p>
 		</div>";
 
-		echo "<div>
-			<p>Contract Duration </p>
+		echo "<div class='grid grid-cols-2'>
+			<p class='text-lg'>Contract Duration </p>
 			<p>$contract_duration ";
 		if ($contract_duration == 1) {
 			echo "month</p>";
@@ -149,7 +158,7 @@
 		}
 		echo "</div>";
 
-		echo "<div>
+		echo "<div class='grid grid-cols-2'>
 			<p>Is Contract Extensible</p>
 		";
 
@@ -160,12 +169,12 @@
 		}
 		echo "</div>";
 
-		echo "<div>
+		echo "<div class='grid grid-cols-2'>
 			<p>Minimum Education</p>
 			<p>$minimum_education</p>
 		</div>";
 
-		echo "<div>
+		echo "<div class='grid grid-cols-2'>
 			<p>Gender</p>";
 		if ($gender == 'M') {
 			echo "<p>Male</p>";
@@ -174,6 +183,7 @@
 		} else if ($gender == 'E') {
 			echo "<p>Male/Female</p>";
 		}
+		echo "</div>";
 		echo "</div>";
 
 	?>
@@ -188,3 +198,5 @@
 
 
 ?>
+
+</div>
