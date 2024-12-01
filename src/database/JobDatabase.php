@@ -3,16 +3,16 @@
 namespace JobDatabase;
 
 
-function getJobInfo(int $id) {
+function getJobInfo($id) {
 	require("db_config.php");
 
 	$sql = "SELECT * FROM job WHERE job_id = ?";
 	$result = $con->execute_query($sql, [$id]);
-	if ($result->num_rows != 1) {
+	if (!$result) {
 		return 0;
 	}
 
-	return $result->fetch_all(MYSQLI_ASSOC);
+	return $result->fetch_all(MYSQLI_ASSOC)[0];
 }
 
 function getJobList(){ 
@@ -161,8 +161,15 @@ function markJobApplicationAsReviewed($job_application_id){
 
 
 // (CR)UD Jobs
-function job_delete($job_id) {
+function deleteJob($id){
+	require("db_config.php");
+	$sql = "DELETE FROM job WHERE job_id = ?";
+	$result = $con->execute_query($sql, [$id]);
+	if (!$result) {
+		return 0;
+	}
 
+	return 1;
 }
 
 function job_update($job_id) {

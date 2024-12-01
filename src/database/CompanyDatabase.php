@@ -188,6 +188,14 @@ function getJobApplicationsForJobId(int $id) {
 	return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function getCompanies() {
+	require("db_config.php");
+	$sql = "SELECT company_id, name FROM company";
+	$result = $con->execute_query($sql);
+
+	return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 // Danger zone
 
 function updateCompany($id, $name, $company_type_id, $password, $industry_type, $country_id, $state_id, $founded_year, $website, $address, $description, $logo) {
@@ -203,7 +211,7 @@ function updateCompany($id, $name, $company_type_id, $password, $industry_type, 
 
 function deleteCompany($id) {
 	require("db_config.php");
-	$sql = "DELETE company WHERE company_id = ?";
+	$sql = "DELETE FROM company WHERE company_id = ?";
 	$result = $con->execute_query($sql, [$id]);
 	if (!$result) {
 		return 0;
