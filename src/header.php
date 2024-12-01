@@ -14,7 +14,7 @@
 	<title>Document</title>
 </head>
 
-<body class="">
+<body class="flex flex-col">
 	<div class="flex justify-between p-3 nav">
 		<div class="text-lg font-semibold logo">Name</div>
 		<div class="buttons">
@@ -64,7 +64,7 @@
 					}
 					$image_url = CompanyDatabase\getCompanyLogoFromId($id);
 
-					echo "<img src='$path/static/images/profiles/$image_url' height='50px'>";
+					echo "<img src='$path/static/images/profiles/$image_url' class='h-10'>";
 				} else if ($_SESSION["type"] = 'admin') {
 
 					$type = 'admin';

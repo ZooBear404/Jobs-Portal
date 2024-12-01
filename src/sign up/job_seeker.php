@@ -69,7 +69,7 @@
 							$first_name = $_POST['first_name'];
 							$last_name = $_POST['last_name'];
 							$email = $_POST['email'];
-							$password = $_POST['password'];
+							$password = $_POST['password'];	
 							$gender = $_POST['gender'];
 							$date_of_birth = $_POST['birth_year'];
 							

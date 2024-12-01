@@ -29,7 +29,7 @@
 
 			<form action="" method="post" class="flex flex-col justify-center h-full gap-3">
 				<div class="flex items-center gap-5 div-first_name">
-					<label for="email_input">Email</label>
+					<label for="email_input">Name</label>
 					<input type="text" name="email" id="email_input" class="p-2 bg-gray-300 rounded-md" required>
 				</div>
 				<div class="flex items-center gap-5 div-password">
