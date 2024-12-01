@@ -9,4 +9,7 @@ if ($result == 0) {
 	header("Location:../../");
 }	
 
+echo "<div><p>Deleted successfully</p></div>";
+sleep(3);
+header("Location:../../");
 ?>

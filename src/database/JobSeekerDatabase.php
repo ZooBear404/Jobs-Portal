@@ -237,7 +237,7 @@ function deleteJobSeeker($id) {
 function updateJobSeeker($id, $firstname, $lastname, $email, $gender, $date_of_birth, $password) {
 	require("db_config.php");
 	$sql = "UPDATE job_seeker SET first_name = ?, last_name = ?, email = ?, gender = ?, date_of_birth = ?, password = ? WHERE job_seeker_id = ?";
-	$result = $con->execute_query($sql, [$first_name, $last_name, $email, $gender, $date_of_birth, $password, $id]);
+	$result = $con->execute_query($sql, [$firstname, $lastname, $email, $gender, $date_of_birth, $password, $id]);
 	if (!$result) {
 		return 0;
 	}
