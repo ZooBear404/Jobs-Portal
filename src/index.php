@@ -63,7 +63,7 @@
 				<div class="flex flex-col gap-2 overflow-y-auto right">
 					<div class="job_seeker-educations">
 						<div class="flex justify-between job-seeker-educations-header">
-							<p>Education</p>
+							<p class="text-xl">Education</p>
 							<?php
 							echo "<a href='crud/job_seeker/education/create.php?id=$job_seeker_id'>";
 							?>
@@ -79,22 +79,24 @@
 								echo "<p>No Education found</p>";
 							} else {
 								foreach ($rows as $row) {
+									$job_seeker_education_id = $row['job_seeker_education_id'];
 									$institute_id = $row["institute_id"];
 									$institute_name = JobSeekerDatabase\getInstituteNameFromId($institute_id);
 									$field_of_study_id = $row["field_of_study_id"];
 									$education_level_id = $row["education_level_id"];
 									$education_level_name = JobSeekerDatabase\getEducationLevelNameFromId($education_level_id);
 
-									echo "<div class='job-seeker-education'>
+									echo "<div class='flex job-seeker-education '>
 											<div class='left-education'>
 												<p>$institute_name</p>
-												<p>$field_of_study_name</p>
 												<p>$education_level_name</p>
 											</div>
 											<div class='right-education'>
-												<a href='crud/job_seeker/education/delete.php?job_seeker_id=$job_seeker_id&id=$institute_id'>d<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
-												<path stroke-linecap='round' stroke-linejoin='round' d='M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z' />
-												</svg></a>
+												<a href='crud/job_seeker/education/delete.php?job_seeker_id=$job_seeker_id&id=$job_seeker_education_id'>
+													<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
+														<path stroke-linecap='round' stroke-linejoin='round' d='M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z' />
+													</svg>
+												</a>
 
 											</div>
 										</div>";
@@ -107,7 +109,7 @@
 					</div>
 					<div class="job-seeker-experiences">
 						<div class="flex justify-between job-seeker-experiences-header">
-							<p>Experiences</p>
+							<p class="text-xl">Experiences</p>
 							<?php
 							echo "<a href='crud/job_seeker/experience/create.php?id=$job_seeker_id'>";
 							?>
@@ -118,19 +120,19 @@
 						</div>
 						<div class="job-seeker-experiences-list">
 							<?php
-							$rows = JobSeekerDatabase\getColumnNamesFromTableWithId(['job_experience_id', 'job_title', 'start_date', 'end_date'], 'job_seeker_experience', $job_seeker_id);
+							$rows = JobSeekerDatabase\getExperience($job_seeker_id);
 							if ($rows == 0) {
 								echo "<p>No Experiences Found</p>";
 							} else {
 								foreach ($rows as $row) {
-									$job_experience_id = $row['job_experience_id'];
+									$job_experience_id = $row['job_seeker_experience_id'];
 									$job_title = $row['job_title'];
 									$start_date = $row['start_date'];
 									$end_date = $row['end_date'];
 
 									if ($end_date == null) $end_date = '_';
 
-									echo "<div class='job-seeker-experience'>
+									echo "<div class='flex job-seeker-experience'>
 										<div class='job-seeker-experience-left'>
 											<p>$job_title</p>
 											<div class='job-seeker-experience-left-bottom'>
@@ -143,11 +145,6 @@
 													<path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
 												</svg>
 										</a>
-										<a href='crud/job_seeker/experience/update.php?job_seeker_id=$job_seeker_id&id=$job_experience_id'>
-											<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
-												<path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
-											</svg>
-										</a>
 										</div>
 									</div>";
 								}
@@ -158,7 +155,7 @@
 					</div>
 					<div class="job-seeker-skills">
 						<div class="flex justify-between job-seeker-skills-header">
-							<p>Skills</p>
+							<p class="text-xl">Skills</p>
 
 							<?php
 							echo "<a href='crud/job_seeker/skill/create.php?id=$job_seeker_id'>";
@@ -170,29 +167,23 @@
 						</div>
 						<div class="job-seeker-skills-list">
 							<?php
-							$rows = JobSeekerDatabase\getColumnNamesFromTableWithId(['skill_id'], 'job_seeker_skill', $job_seeker_id);
+							$rows = JobSeekerDatabase\getSkill($job_seeker_id);
 							if ($rows == 0) {
-								echo "<p>No Skills Found</p>";
+								echo "<p>No Skills Found</p>";;
 							} else {
 								foreach ($rows as $row) {
-									$skill_id = $row["skill_id"];
-									$row = JobSeekerDatabase\getColumnNamesFromTable(['title'], "skill");
-									$skill_name = $row['skill_name'];
+									$skill_id = $row['job_seeker_skill_id'];
+									$description = $row['description'];
 
-									echo "<div class='job-seeker-skill'>
+									echo "<div class='flex job-seeker-skill'>
 										<div class='job-seeker-skill-left'>
-											<p>$skill_name</p>
+											<p>$description</p>
 										</div>
 										<div class='job-seeker-skill-right'>
 										<a href='crud/job_seeker/skill/delete.php?job_seeker_id=$job_seeker_id&id=$skill_id'>
 												<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
 													<path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
 												</svg>
-										</a>
-										<a href='crud/job_seeker/skill/update.php?job_seeker_id=$job_seeker_id&id=$skill_id'>
-											<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
-												<path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
-											</svg>
 										</a>
 										</div>
 									</div>";
@@ -206,7 +197,7 @@
 					</div>
 					<div class="job-seeker-languages">
 						<div class="flex justify-between job-seeker-languages-header">
-							<p>Languages</p>
+							<p class="text-xl">Languages</p>
 
 							<?php
 							echo "<a href='crud/job_seeker/language/create.php?id=$job_seeker_id'>";
@@ -218,31 +209,26 @@
 						</div>
 						<div class="job-seeker-languages-list">
 							<?php
-							$rows = JobSeekerDatabase\getColumnNamesFromTableWithId(['job_seeker_language_id', 'language_id', 'language_fluency_id'], 'job_seeker_language', $job_seeker_id);
+							$rows = JobSeekerDatabase\getJobSeekerLanguage($job_seeker_id);
 							if ($rows == 0) {
 								echo "<p>No Languages Found</p>";
 							} else {
 								foreach ($rows as $row) {
 									$job_seeker_language_id = $row["job_seeker_language_id"];
 									$language_id = $row["language_id"];
-									$language_name = JobSeekerDatabase\getNameByTablePrimaryKey('language', $language_id);
-									$job_seeker_language_fluency_id = $row['language_fluency'];
-									$fluency_name = JobSeekerDatabase\getNameByTablePrimaryKey('language_fluency', $job_seeker_language_fluency_id);
+									$language_name = JobSeekerDatabase\getLanguageName($language_id);
+									$job_seeker_language_fluency_id = $row['language_fluency_id'];
+									$fluency_name = JobSeekerDatabase\getLanguageFluencyName($job_seeker_language_fluency_id);
 
-									echo "<div class='job-seeker-language'>
+									echo "<div class='flex job-seeker-language'>
 										<div class='job-seeker-language-left'>
 											<p>$language_name</p>
 										</div>
 										<div class='job-seeker-language-right'>
-										<a href='crud/job_seeker/language/delete.php?job_seeker_id=$job_seeker_id&id=$skill_id'>
+										<a href='crud/job_seeker/language/delete.php?job_seeker_id=$job_seeker_id&id=$job_seeker_language_id'>
 												<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
 													<path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
 												</svg>
-										</a>
-										<a href='crud/job_seeker/language/update.php?job_seeker_id=$job_seeker_id&id=$skill_id'>
-											<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='20px'>
-												<path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
-											</svg>
 										</a>
 										</div>
 									</div>";
@@ -362,7 +348,7 @@
 <?php } else if ($type == 'admin') { ?>
 	<div class="grid grid-cols-2 grid-row-2">
 		<div class="flex flex-col gap-2 p-4 top">
-			<div class="flex flex-col gap-2 p-3 rounded-md admin-job-seeker-container bg-lime-200">
+			<div class="flex flex-col gap-2 p-3 text-white bg-gray-900 rounded-md admin-job-seeker-container">
 				<p class="text-xl admin-job-seeker-header">Job Seekers</p>
 				<div class="flex flex-col gap-2 overflow-y-auto admin-job-seeker-list">
 					<?php
@@ -377,7 +363,7 @@
 							$profile_image = JobSeekerDatabase\getUserImageUrlFromId($job_seeker_id);
 							$first_name = $row['first_name'];
 							$last_name = $row['last_name'];
-							echo "<div class='flex justify-between gap-2 p-2 rounded-md bg-emerald-200 admin-job-seeker'>
+							echo "<div class='flex justify-between gap-2 p-2 text-white bg-red-700 rounded-md admin-job-seeker'>
 									<div class='flex items-center gap-2'>
 										<img src='$images_url$profile_image' class='h-10'>
 										<p>$first_name $last_name</p>
@@ -400,7 +386,7 @@
 					?>
 				</div>
 			</div>
-			<div class="flex flex-col gap-2 p-3 rounded-md admin-jobs-container bg-lime-200">
+			<div class="flex flex-col gap-2 p-3 text-white bg-gray-900 rounded-md admin-jobs-container">
 				<p class="text-xl admin-jobs-header">Jobs</p>
 				<div class="flex flex-col gap-2 overflow-y-auto admin-jobs-list">
 					<?php
@@ -418,18 +404,18 @@
 							$company_name = CompanyDatabase\getCompanyNameFromId($company_id);
 							$company_logo = CompanyDatabase\getCompanyLogoFromId($company_id);
 
-							echo "<div class='flex justify-between gap-2 p-2 rounded-md admin-job bg-emerald-200 '>
+							echo "<div class='flex justify-between gap-2 p-2 text-white bg-red-700 rounded-md admin-job '>
 									<div class='flex items-center gap-2'>
 										<img src='$images_url$company_logo' class='h-10'>
 										<p>$job_name</p>
 										</div>
 									<div>
-										<a href='crud/job/delete.php?$job_id'>
+										<a href='crud/job/delete.php?id=$job_id'>
 										<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
 										<path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
 										</svg>
 										</a>
-										<a href='crud/job/update.php?$job_id'>
+										<a href='crud/job/update.php?id=$job_id'>
 										<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
 										<path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
 										</svg>
@@ -444,7 +430,7 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-2 p-4 bottom">
-			<div class="flex flex-col gap-2 p-3 rounded-md admin-job-applications-container bg-lime-200">
+			<div class="flex flex-col gap-2 p-3 text-white bg-gray-900 rounded-md admin-job-applications-container">
 				<p class="text-xl admin-job-applications-header">Job Applications</p>
 				<div class="flex flex-col gap-2 overflow-y-auto admin-job-applications">
 					<?php
@@ -460,19 +446,19 @@
 							$job_seeker_name = JobSeekerDatabase\getJobSeekerNameById($job_seeker_id);
 							$job_seeker_image_path = JobSeekerDatabase\getUserImageUrlFromId($job_seeker_id);
 
-							echo "<div class='flex justify-between gap-2 p-2 rounded-md bg-emerald-200 admin-job-application'>
+							echo "<div class='flex justify-between gap-2 p-2 text-white bg-red-700 rounded-md admin-job-application'>
 									<p>$job_name</p>
 									<div class='flex gap-2'>
 										<img src='$images_url$job_seeker_image_path' class='h-10'>
 										<div>
 											<p>$job_seeker_name[0] $job_seeker_name[1]</p>
 										</div>
-										<a href='crud/job_application/delete.php?$job_application_id'>
+										<a href='crud/job_application/delete.php?id=$job_application_id'>
 									<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
 										<path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
 									</svg>
 									</a>
-									<a href='crud/job_application/update.php?$job_application_id'>
+									<a href='crud/job_application/update.php?id=$job_application_id'>
 									<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
 										<path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
 									</svg>
@@ -486,7 +472,7 @@
 					?>
 				</div>
 			</div>
-			<div class="flex flex-col gap-2 p-3 rounded-md admin-company bg-lime-200">
+			<div class="flex flex-col gap-2 p-3 text-white bg-gray-900 rounded-md admin-company">
 				<p class="text-xl admin-company-header">Companies</p>
 				<div class="flex flex-col gap-2 overflow-y-auto admin-company-container">
 					<?php
@@ -498,7 +484,7 @@
 							$company_id = $row["company_id"];
 							$company_name = $row["name"];
 							$company_logo = CompanyDatabase\getCompanyLogoFromId($company_id);
-							echo "<div class='flex justify-between gap-2 p-2 rounded-md admin-single-company bg-emerald-200'>
+							echo "<div class='flex justify-between gap-2 p-2 text-white bg-red-700 rounded-md admin-single-company'>
 									<div class='flex items-center gap-2'>
 										<img src='$images_url$company_logo' class='h-10'>
 										<div>
@@ -506,12 +492,12 @@
 										</div>
 									</div>
 									<div class='flex items-center gap-2'>
-										<a href='crud/company/delete.php?$company_id'>
+										<a href='crud/company/delete.php?id=$company_id'>
 										<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
 										<path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
 										</svg>
 										</a>
-										<a href='crud/company/update.php$company_id'>
+										<a href='crud/company/update.php?id=$company_id'>
 										<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6' height='30px'>
 										<path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
 										</svg>
